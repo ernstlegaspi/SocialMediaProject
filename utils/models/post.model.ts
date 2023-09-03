@@ -6,13 +6,13 @@ const postSchema = new Schema({
 		ref: 'User',
 		required: true
 	},
+	comments: [{
+		type: Schema.Types.ObjectId,
+		ref: 'Comment'
+	}],
 	caption: {
 		type: String,
 		required: true
-	},
-	comments: {
-		type: Schema.Types.ObjectId,
-		ref: 'Comment'
 	},
 	likeCount: {
 		type: Number,
