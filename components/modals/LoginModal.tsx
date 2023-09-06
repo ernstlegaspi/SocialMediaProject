@@ -1,23 +1,49 @@
 'use client'
 
-import Input from "../Input"
-
 import Modal from "./Modal"
 import UseLoginModal from "@/hooks/useLoginModal"
 import UseRegisterModal from "@/hooks/useRegisterModal"
 
+import { useState } from 'react'
+import { SubmitHandler, FieldValues, useForm } from 'react-hook-form'
 import { motion } from 'framer-motion'
+import { useRouter } from 'next/navigation'
+import { signIn } from 'next-auth/react'
+
+import Button from '../Button'
+import Input from '../Input'
 
 const LoginModal = () => {
 	const loginModal = UseLoginModal()
 	const registerModal = UseRegisterModal()
-	
+	const router = useRouter()
+	const [disabled, setDisabled] = useState(false)
+
+	const {
+		register,
+		handleSubmit,
+		formState: { errors }
+	} = useForm<FieldValues>({
+		defaultValues: {
+			email: '',
+			password: ''
+		}
+	})
+
+	const onSubmit: SubmitHandler<FieldValues> = data => {
+		setDisabled(true)
+		
+		signIn('credentials', { ...data, redirect: false })
+		.then(() => router.refresh())
+	}
+
 	const bodyContent = (
 		<>
-			<Input fullWidth name="email" placeholder="Email" type="email" />
+			<Input required fullWidth disabled={disabled} placeholder="Email" id="email" register={register} />
 			<div className="mt-5"></div>
-			<Input fullWidth name="password" placeholder="Password" type="password" />
+			<Input required fullWidth disabled={disabled} placeholder="Password" id="password" register={register} />
 			<div className="mt-7"></div>
+			<Button isSubmit onClick={() => {}} disabled={disabled} fullWidth label="Register" />
 		</>
 	)
 
@@ -36,7 +62,9 @@ const LoginModal = () => {
 	
 	return (
 		<motion.div transition={{ delay: 0, type: 'spring', damping: 10, stiffness: 150 }} initial={{ y: '-70vh' }} animate={{ y: '0' }} exit={{ y: '0' }}>
-			<Modal bodyContent={bodyContent} reminderContent={reminderContent} label="Login" onClick={() => {}} onClickSocial={() => {}} />
+			<form onSubmit={handleSubmit(onSubmit)}>
+				<Modal disabled={disabled} bodyContent={bodyContent} reminderContent={reminderContent} label="Login" onClickSocial={() => {}} />
+			</form>
 		</motion.div>
 	)
 }

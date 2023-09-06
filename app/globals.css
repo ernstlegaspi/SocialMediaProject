@@ -25,3 +25,11 @@ html, body, :root {
 .text-main-color {
 	color: #2a2e35
 }
+
+.input {
+	outline: none;
+	border-bottom: 1px solid #000;
+	border-color: #2a2e35;
+	padding: 8px;
+	background: transparent;
+}
