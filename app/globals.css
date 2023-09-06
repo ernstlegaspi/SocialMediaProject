@@ -15,21 +15,25 @@ html, body, :root {
 }
 
 .bg-main-color {
-	background: #2a2e35
+	background: #141C29
 }
 
 .border-main-color {
-	border-color: #2a2e35
+	border-color: #141C29
+}
+
+.post-button-color {
+	background: rgb(120, 86, 255)
 }
 
 .text-main-color {
-	color: #2a2e35
+	color: #141C29
 }
 
 .input {
 	outline: none;
 	border-bottom: 1px solid #000;
-	border-color: #2a2e35;
+	border-color: #141C29;
 	padding: 8px;
 	background: transparent;
 }
