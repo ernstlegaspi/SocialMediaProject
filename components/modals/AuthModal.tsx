@@ -13,7 +13,7 @@ interface ModalProps {
 	disabled?: boolean
 }
 
-const Modal = ({ disabled, bodyContent, reminderContent, label, onClickSocial }: ModalProps) => {
+const AuthModal = ({ disabled, bodyContent, reminderContent, label, onClickSocial }: ModalProps) => {
 	return (
 		<>
 			{ bodyContent }
@@ -29,4 +29,4 @@ const Modal = ({ disabled, bodyContent, reminderContent, label, onClickSocial }:
 	)
 }
 
-export default Modal
+export default AuthModal

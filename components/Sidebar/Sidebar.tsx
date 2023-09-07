@@ -3,12 +3,14 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { signOut } from 'next-auth/react'
 import Navigation from './Navigation'
+import UsePostModal from '@/hooks/usePostModal'
 
 import { BsPerson } from 'react-icons/bs'
+import { signOut } from 'next-auth/react'
 
 const Sidebar = () => {
+	const usePostModal = UsePostModal()
 	
 	return (
 		<div className="h-full pl-3 w-[250px] relative">
@@ -19,7 +21,7 @@ const Sidebar = () => {
 			</div>
 			<Navigation icon={BsPerson} label="Profile" onClick={() => {}} />
 			<div className="w-full pl-2 pr-5">
-				<button className="transition-all hover:bg-indigo-800 mt-6 p-2 text-white post-button-color rounded-full w-full">Post</button>
+				<button onClick={usePostModal.onOpen} className="customize-button mt-6 p-2 w-full">Post</button>
 			</div>
 			<button className="p-5 py-3 rounded-full w-[85%] text-white post-button-color absolute left-5 bottom-5" onClick={() => signOut()}>Logout</button>
 		</div>

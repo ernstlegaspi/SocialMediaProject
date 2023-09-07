@@ -10,11 +10,19 @@ interface InputProps {
 	type?: string
 	register: UseFormRegister<FieldValues>
 	required: boolean
+	isTextarea?: boolean
+	setPostBody?: (value: string) => void
 }
 
-const Input = ({ type = "text", disabled, fullWidth, id, placeholder, register, required }: InputProps) => {
+const Input = ({ setPostBody, isTextarea, type = "text", disabled, fullWidth, id, placeholder, register, required }: InputProps) => {
 	return (
-		<input type={type} className={`bg-transparent ${fullWidth ? 'w-full' : 'w-1/2'} outline-none border-b border-main-color p-2`} id={id} { ...register(id, { required }) } disabled={disabled} placeholder={placeholder} />
+		<>
+			{isTextarea ? (
+				<textarea id={id} { ...register(id, { required }) } className="feed-scroll w-full mt-3 text-xl bg-transparent resize-none outline-none placeholder:text-slate-400/80 text-white" placeholder={placeholder} onChange={e => setPostBody!(e.target.value)}></textarea>
+			) : (
+				<input type={type} className={`bg-transparent ${fullWidth ? 'w-full' : 'w-1/2'} outline-none border-b border-main-color p-2`} id={id} { ...register(id, { required }) } disabled={disabled} placeholder={placeholder} />
+			)}
+		</>
 	)
 }
 

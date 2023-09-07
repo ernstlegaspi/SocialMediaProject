@@ -26,6 +26,10 @@ html, body, :root {
 	background: rgb(120, 86, 255)
 }
 
+.indigo-text {
+	color: rgb(120, 86, 255)
+}
+
 .text-main-color {
 	color: #141C29
 }
@@ -62,3 +66,19 @@ html, body, :root {
 	background-color: rgba(30,41,59, 0.7);
 }
 
+.customize-button {
+	transition: all;
+	color: #fff;
+	border-radius: 10000px;
+	background: rgb(120, 86, 255)
+}
+
+.disabled-button {
+	color: #fff;
+	border-radius: 10000px;
+	background: rgba(120, 86, 255, 0.4)
+}
+
+.customize-button:hover {
+	background: rgb(55, 48, 163)
+}

@@ -28,7 +28,8 @@ export async function POST(request: Request) {
 				firstName,
 				lastName,
 				email,
-				hashedPassword
+				hashedPassword,
+				tag: `${firstName}${lastName}`
 			}
 		})
 

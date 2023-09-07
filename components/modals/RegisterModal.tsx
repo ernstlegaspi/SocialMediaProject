@@ -1,7 +1,7 @@
 'use client'
 
 import axios from 'axios'
-import Modal from "./Modal"
+import AuthModal from "./AuthModal"
 import UseLoginModal from "@/hooks/useLoginModal"
 import UseRegisterModal from "@/hooks/useRegisterModal"
 
@@ -85,7 +85,7 @@ const RegisterModal = () => {
 	return (
 		<motion.div transition={{ delay: 0, type: 'spring', damping: 10, stiffness: 150 }} initial={{ y: '-70vh' }} animate={{ y: '0' }} exit={{ y: '0' }}>
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<Modal disabled={disabled} bodyContent={bodyContent} reminderContent={reminderContent} label="Register" onClickSocial={() => {}} />
+				<AuthModal disabled={disabled} bodyContent={bodyContent} reminderContent={reminderContent} label="Register" onClickSocial={() => {}} />
 			</form>
 		</motion.div>
 	)

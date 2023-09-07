@@ -1,6 +1,6 @@
 'use client'
 
-import Modal from "./Modal"
+import AuthModal from "./AuthModal"
 import UseLoginModal from "@/hooks/useLoginModal"
 import UseRegisterModal from "@/hooks/useRegisterModal"
 
@@ -63,7 +63,7 @@ const LoginModal = () => {
 	return (
 		<motion.div transition={{ delay: 0, type: 'spring', damping: 10, stiffness: 150 }} initial={{ y: '-70vh' }} animate={{ y: '0' }} exit={{ y: '0' }}>
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<Modal disabled={disabled} bodyContent={bodyContent} reminderContent={reminderContent} label="Login" onClickSocial={() => {}} />
+				<AuthModal disabled={disabled} bodyContent={bodyContent} reminderContent={reminderContent} label="Login" onClickSocial={() => {}} />
 			</form>
 		</motion.div>
 	)
