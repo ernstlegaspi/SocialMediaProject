@@ -6,7 +6,11 @@ import Link from 'next/link'
 import Navigation from './Navigation'
 import UsePostModal from '@/hooks/usePostModal'
 
-import { BsPerson } from 'react-icons/bs'
+import { BiHomeAlt2 } from 'react-icons/bi'
+import { LuSearch } from 'react-icons/lu'
+import { AiOutlineBell } from 'react-icons/ai'
+import { HiOutlineClipboardList } from 'react-icons/hi'
+import { BsPeople, BsBookmark, BsEnvelope, BsPerson } from 'react-icons/bs'
 import { signOut } from 'next-auth/react'
 
 const Sidebar = () => {
@@ -19,6 +23,13 @@ const Sidebar = () => {
 					<Image className="mt-5 ml-2" alt="Bird" width={55} height={55} src={'/img/logo.png'} />
 				</Link>
 			</div>
+			<Navigation icon={BiHomeAlt2} label="Home" onClick={() => {}} />
+			<Navigation icon={LuSearch} label="Search" onClick={() => {}} />
+			<Navigation icon={AiOutlineBell} label="Notifications" onClick={() => {}} />
+			<Navigation icon={BsEnvelope} label="Messages" onClick={() => {}} />
+			<Navigation icon={HiOutlineClipboardList} label="Lists" onClick={() => {}} />
+			<Navigation icon={BsBookmark} label="Bookmarks" onClick={() => {}} />
+			<Navigation icon={BsPeople} label="Communities" onClick={() => {}} />
 			<Navigation icon={BsPerson} label="Profile" onClick={() => {}} />
 			<div className="w-full pl-2 pr-5">
 				<button onClick={usePostModal.onOpen} className="customize-button mt-6 p-2 w-full">Post</button>

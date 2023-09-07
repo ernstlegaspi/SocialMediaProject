@@ -8,8 +8,10 @@ import { AiOutlineHeart } from 'react-icons/ai'
 import { IoChatboxOutline } from 'react-icons/io5'
 import { IconType } from 'react-icons'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 import Image from 'next/image'
+import { Post } from '@prisma/client'
 
 interface FeedProps {
 	avatar?: string
@@ -20,11 +22,13 @@ interface FeedProps {
 	name: string | undefined | null
 	tag: string | null
 	time?: Date
+	post: Post
 }
 
-const Feed = ({ avatar, body, commentCount, image, likeCount, name, tag, time }: FeedProps) => {
+const Feed = ({ avatar, body, commentCount, image, likeCount, name, tag, time, post }: FeedProps) => {
 	const [isCommentHovered, setIsCommentHovered] = useState(false)
 	const [isHeartHovered, setIsHeartHovered] = useState(false)
+	const router = useRouter()
 	
 	const interactButton = (setHover: any, isBlue: boolean, isHovered: boolean, Icon: IconType, count: string) => {
 		return (
@@ -38,7 +42,7 @@ const Feed = ({ avatar, body, commentCount, image, likeCount, name, tag, time }:
 	}
 
 	return (
-		<div className="hover:bg-slate-500/5 cursor-pointer p-5 border-b border-slate-700 w-full">
+		<div onClick={() => router.push(`/${tag}/status/${post.id}`)} className="hover:bg-slate-500/5 cursor-pointer p-5 border-b border-slate-700 w-full">
 			<div className="flex">
 				<div className="flex justify-end w-[10%] h-full">
 					<Link href="/">

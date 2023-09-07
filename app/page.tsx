@@ -10,8 +10,7 @@ import PostModal from '@/components/modals/PostModal'
 export default async function HomePage() {
 	const user = await getCurrentUser()
 	const posts = await getFeed()
-	
-	
+
 	return (
 		<>
 			{user ? (
@@ -27,7 +26,7 @@ export default async function HomePage() {
 								console.log(post.createdAt)
 
 								return (
-									<Feed key={post.id} time={post.createdAt} name={user?.firstName} tag={user.tag} body={post.body} likeCount={post?.likeCount} commentCount={post?.commentCount} />
+									<Feed key={post.id} time={post.createdAt} name={user?.firstName} tag={user.tag} body={post.body} likeCount={post?.likeCount} commentCount={post?.commentCount} post={post} />
 								)
 							})}
 						</div>
