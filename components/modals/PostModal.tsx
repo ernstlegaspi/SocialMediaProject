@@ -34,10 +34,7 @@ const PostModal = () => {
 	}	
 
 	const onSubmit: SubmitHandler<FieldValues> = data => {
-		if(postBody == '') {
-			alert(1)
-			return
-		}
+		if(postBody == '') return
 		
 		setDisabled(true)
 		
@@ -60,7 +57,7 @@ const PostModal = () => {
 					<div className="mr-5">
 						<Avatar width={40} height={40} src={null} />
 					</div>
-					<Input setPostBody={setPostBody} placeholder="What is happening?!" register={register} id="body" isTextarea required />
+					<Input value={postBody} setPostBody={setPostBody} placeholder="What is happening?!" register={register} id="body" isTextarea required />
 				</div>
 				<div className="w-full px-4">
 					<div className="border-t border-slate-700 flex items-center justify-between mb-3 pt-3">

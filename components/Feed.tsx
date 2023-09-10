@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation'
 
 import Image from 'next/image'
 import { Post } from '@prisma/client'
+import InteractButton from './InteractButton'
 
 interface FeedProps {
 	avatar?: string
@@ -29,17 +30,6 @@ const Feed = ({ avatar, body, commentCount, image, likeCount, name, tag, time, p
 	const [isCommentHovered, setIsCommentHovered] = useState(false)
 	const [isHeartHovered, setIsHeartHovered] = useState(false)
 	const router = useRouter()
-	
-	const interactButton = (setHover: any, isBlue: boolean, isHovered: boolean, Icon: IconType, count: string) => {
-		return (
-			<div onMouseEnter={() => setHover((val: boolean) => !val)} onMouseLeave={() => setHover((val: boolean) => !val)} className="text-gray-500 flex items-center mr-10">
-				<div className={`${isHovered ? `${isBlue ? 'bg-sky-300/10' : 'bg-red-400/20'}` : ''} py-[5px] px-[6px] rounded-full`}>
-					<Icon color={`${isHovered ? `${isBlue ? 'lightblue' : 'red'}` : ''}`} size={20} />
-				</div>
-				<span className={`${isHovered ? `${isBlue ? 'blue' : 'red'}` : ''} ml-2`}>{count}</span>
-			</div>
-		)
-	}
 
 	return (
 		<div onClick={() => router.push(`/${tag}/status/${post.id}`)} className="hover:bg-slate-500/5 cursor-pointer p-5 border-b border-slate-700 w-full">
@@ -54,8 +44,14 @@ const Feed = ({ avatar, body, commentCount, image, likeCount, name, tag, time, p
 						<p className="hover:underline font-bold text-white">{name}</p>
 						<p className="text-sm mx-1 text-gray-500">· @{tag} ·</p>
 						<p className="text-sm text-gray-500">
-							{moment(time).fromNow().toString().includes("seconds ago") ? "now" 
-							: moment(time).fromNow().toString().includes("a minute") ? moment(time).fromNow().toString().replace("a minute ago", "1m") : `${moment(time).fromNow().toString().split(" ")[0]}m`}
+							{/* {moment(time).fromNow()} */}
+							{moment(time).fromNow().includes("seconds ago") ? "now" 
+							: moment(time).fromNow().includes("a day ago") ? "1 day ago"
+							: moment(time).fromNow().includes("a minute") ? "1 minute ago"
+							: moment(time).fromNow().includes("an hour ago") ? "1 hour ago" 
+							: moment(time).fromNow().includes("a day ago") ? "1 day ago" 
+							: moment(time).fromNow().includes("days ago") ? moment(time).format("MMM Do") 
+							: `${moment(time).fromNow().split(" ")[0]}m`}
 						</p>
 					</div>
 					<p className="mt-1 text-white/80 text-sm w-[100%]">{body}</p>
@@ -65,8 +61,8 @@ const Feed = ({ avatar, body, commentCount, image, likeCount, name, tag, time, p
 						</div>
 					)}
 					<div className="flex mt-3 text-white">
-						{interactButton(setIsCommentHovered, true, isCommentHovered, IoChatboxOutline, commentCount?.toString()! || "0")}
-						{interactButton(setIsHeartHovered, false, isHeartHovered, AiOutlineHeart, likeCount?.toString()! || "0")}
+						<InteractButton setHover={setIsCommentHovered} isBlue count={commentCount?.toString()! || "0"} isHovered={isCommentHovered} icon={IoChatboxOutline} />
+						<InteractButton setHover={setIsHeartHovered} count={likeCount?.toString()! || "0"} isHovered={isHeartHovered} icon={AiOutlineHeart} />
 					</div>
 				</div>
 			</div>

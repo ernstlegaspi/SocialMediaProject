@@ -34,6 +34,10 @@ html, body, :root {
 	color: #141C29
 }
 
+.customize-text {
+	color: rgb(120, 86, 255)
+}
+
 .blue {
 	color: #add8e6
 }
