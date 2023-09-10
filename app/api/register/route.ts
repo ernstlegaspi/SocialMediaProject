@@ -29,7 +29,8 @@ export async function POST(request: Request) {
 				lastName,
 				email,
 				hashedPassword,
-				tag: `${firstName}${lastName}`
+				tag: `${firstName}${lastName}`,
+				image: ""
 			}
 		})
 

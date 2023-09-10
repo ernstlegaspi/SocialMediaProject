@@ -9,6 +9,8 @@ export async function POST(request: Request) {
 
 		if(!currentUser) return new NextResponse('User not logged in', { status: 401 })
 		
+		if(!currentUser?.firstName || !currentUser.tag) return new NextResponse('Invalid Credentials', { status: 401 })
+		
 		const _data = await request.json()
 
 		const { body } = _data
@@ -18,7 +20,10 @@ export async function POST(request: Request) {
 		const newPost = await prisma.post.create({
 			data: {
 				body,
-				userId: currentUser.id
+				userId: currentUser.id,
+				userName: currentUser.firstName + " " + currentUser.lastName,
+				userTag: currentUser.tag,
+				userImage: currentUser.image
 			}
 		})
 

@@ -9,10 +9,11 @@ datasource db {
 
 model User {
 	id String @id @default(auto()) @map("_id") @db.ObjectId
-	firstName String?
-	lastName String?
+	firstName String
+	lastName String
 	email String @unique
 	hashedPassword String
+	image String
 	likeCount Int?
 	tag String?
 	createdAt DateTime @default(now())
@@ -25,6 +26,9 @@ model User {
 model Comment {
 	id String @id @default(auto()) @map("_id") @db.ObjectId
 	body String
+	userName String
+	userTag String
+	userImage String
 	commentCount Int?
 	likeCount Int?
 	createdAt DateTime @default(now())
@@ -39,6 +43,9 @@ model Comment {
 
 model Post {
 	id String @id @default(auto()) @map("_id") @db.ObjectId
+	userName String
+	userTag String
+	userImage String
 	body String
 	commentCount Int?
 	likeCount Int?
