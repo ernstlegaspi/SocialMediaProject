@@ -61,6 +61,12 @@ const PageFeed = ({ id, userName, userTag, body, userImage, commentCount, likeCo
 		})
 	}
 
+	const handleLikeFeed = () => {
+		axios.post(`/api/like-post/${id}`)
+		.then(() => alert(1))
+		.catch(() => alert(2))
+	}
+	
 	return (
 		<>
 			<div className="p-5">
@@ -81,9 +87,9 @@ const PageFeed = ({ id, userName, userTag, body, userImage, commentCount, likeCo
 					<p>· {moment(dateTime).format('LL')}</p>
 				</div>
 				<div className="mt-5 p-3 border-y border-slate-700 flex justify-between text-slate-500">
-					<InteractButton setHover={setIsCommentHovered} isBlue isHovered={isCommentHovered} icon={IoChatboxOutline} />
-					<InteractButton setHover={setIsHeartHovered} isHovered={isHeartHovered} icon={AiOutlineHeart} />
-					<InteractButton setHover={setIsBookmarkHovered} isYellow isHovered={isBookmarkHovered} icon={BsBookmark} />
+					<InteractButton onClick={() => {}} setHover={setIsCommentHovered} isBlue isHovered={isCommentHovered} icon={IoChatboxOutline} />
+					<InteractButton onClick={handleLikeFeed} setHover={setIsHeartHovered} isHovered={isHeartHovered} icon={AiOutlineHeart} />
+					<InteractButton onClick={() => {}} setHover={setIsBookmarkHovered} isYellow isHovered={isBookmarkHovered} icon={BsBookmark} />
 				</div>
 				<div className="w-full flex">
 					<Link className="mt-4" href="/">
@@ -107,7 +113,7 @@ const PageFeed = ({ id, userName, userTag, body, userImage, commentCount, likeCo
 				</div>
 			</div>
 			<div className="bg-slate-700 w-full h-[1px]"></div>
-			<div className="feed-scroll h-full w-full overflow-y-auto">
+			<div className={`${comments.length < 4 ? '' : 'feed-scroll'} overflow-y-auto h-full w-full`}>
 				{comments?.map(comment => (
 					<Feed dateTime={comment.createdAt} commentCount={commentCount!} likeCount={comment.likeCount} tag={comment.userTag} name={comment.userName} body={comment.body} id={id} />
 				))}

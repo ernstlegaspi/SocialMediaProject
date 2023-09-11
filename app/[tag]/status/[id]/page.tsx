@@ -1,5 +1,5 @@
 import Feed from './Feed'
-import getFeedById from '@/actions/getFeedById'
+import getFeedById from '@/actions/getFeedByIdWithComments'
 
 interface IParams {
 	id: string

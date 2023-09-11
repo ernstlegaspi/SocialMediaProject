@@ -1,7 +1,7 @@
 import prisma from '@/libs/prismadb'
 import bcrypt from 'bcrypt'
 
-import { NextResponse } from 'next/server'
+import { _201, _400, _409, _500 } from '@/libs/constants'
 
 export async function POST(request: Request) {
 	try {
@@ -9,11 +9,11 @@ export async function POST(request: Request) {
 
 		const { firstName, lastName, email, password } = body
 
-		if(!firstName || !lastName || !email || !password) return new Response("Invalid Credentials", { status: 400 })
+		if(!firstName || !lastName || !email || !password) return _400()
 		
 		const hashedPassword = await bcrypt.hash(password, 12)
 
-		if(!hashedPassword) return new Response("Internal Server Error", { status: 500 })
+		if(!hashedPassword) return _500()
 		
 		const user = await prisma.user.findUnique({
 			where: {
@@ -21,7 +21,7 @@ export async function POST(request: Request) {
 			}
 		})
 
-		if(user) return new Response("Email already existing", { status: 409 })
+		if(user) return _409('Email already existing')
 		
 		const newUser = await prisma.user.create({
 			data: {
@@ -34,13 +34,13 @@ export async function POST(request: Request) {
 			}
 		})
 
-		if(!newUser) return new Response("Internal Server Error", { status: 500 })
+		if(!newUser) return _500()
 
-		return NextResponse.json(newUser, { status: 201 })
+		return _201(newUser)
 	}
 	catch(error: any) {
 		console.log("Register Error")
 
-		return new Response("Error Register", { status: 400 })
+		return _400()
 	}
 }

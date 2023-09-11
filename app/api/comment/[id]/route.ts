@@ -1,7 +1,7 @@
 import prisma from '@/libs/prismadb'
 import getCurrentUser from '@/actions/getCurrentUser'
 
-import { NextResponse } from 'next/server'
+import { _201, _400, _401, _409, _500 } from '@/libs/constants'
 
 interface IParams {
 	id: string
@@ -11,7 +11,7 @@ export async function POST(request: Request, { params }: { params: IParams }) {
 	try {
 		const user = await getCurrentUser()
 	
-		if(!user) return new NextResponse('User is not logged in', { status: 401 })
+		if(!user) return _401()
 		
 		const { id } = params
 
@@ -19,9 +19,9 @@ export async function POST(request: Request, { params }: { params: IParams }) {
 
 		const { body } = req
 
-		if(!body) return new NextResponse('Invalid Request', { status: 400 })
+		if(!body) return _400()
 		
-		if(!id) return new NextResponse('Internal Server Error', { status: 500 })
+		if(!id) return _500()
 		
 		const newComment = await prisma.comment.create({
 			data: {
@@ -36,11 +36,10 @@ export async function POST(request: Request, { params }: { params: IParams }) {
 			}
 		})
 
-		if(!newComment) return new NextResponse('Internal Server Error', { status: 500 })
-
-		return NextResponse.json(newComment, { status: 201 })
+		if(!newComment) return _500()
+		return _201(newComment)
 	}
 	catch(error: any) {
-		return new NextResponse('Invalid Request', { status: 400 })
+		return _400()
 	}
 }

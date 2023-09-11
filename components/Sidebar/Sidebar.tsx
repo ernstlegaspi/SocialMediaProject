@@ -25,7 +25,7 @@ const Sidebar = () => {
 	return (
 		<div className="h-full pl-3 w-[250px] relative">
 			<div className="cursor-pointer w-[25%]" onClick={() => router.push('/')}>
-				<Image className="mt-5 ml-2" alt="Bird" width={50} height={50} src={'/img/logo.png'} />
+				<Image className="mt-5 ml-2" alt="Bird" width={40} height={40} src={'/img/logo.png'} />
 			</div>
 			<Navigation icon={BiHomeAlt2} label="Home" onClick={() => {}} />
 			<Navigation icon={LuSearch} label="Search" onClick={() => {}} />

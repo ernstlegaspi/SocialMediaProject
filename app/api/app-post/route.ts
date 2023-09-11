@@ -1,21 +1,21 @@
 import prisma from '@/libs/prismadb'
 import getCurrentUser from '@/actions/getCurrentUser'
 
-import { NextResponse } from 'next/server'
+import { _201, _400, _401, _409, _500 } from '@/libs/constants'
 
 export async function POST(request: Request) {
 	try {
 		const currentUser = await getCurrentUser()
 
-		if(!currentUser) return new NextResponse('User not logged in', { status: 401 })
+		if(!currentUser) return _401()
 		
-		if(!currentUser?.firstName || !currentUser.tag) return new NextResponse('Invalid Credentials', { status: 401 })
+		if(!currentUser?.firstName || !currentUser.tag) return _400()
 		
 		const _data = await request.json()
 
 		const { body } = _data
 
-		if(!body) return new NextResponse('No data provided', { status: 400 })
+		if(!body) return _400()
 		
 		const newPost = await prisma.post.create({
 			data: {
@@ -27,11 +27,11 @@ export async function POST(request: Request) {
 			}
 		})
 
-		if(!newPost) return new NextResponse("Internal Server Error", { status: 500 })
+		if(!newPost) return _500()
 
-		return NextResponse.json(newPost, { status: 201 })
+		return _201(newPost)
 	}
 	catch(error: any) {
-		return new NextResponse('Invalid Post', { status: 400 })
+		return _400()
 	}
 }
