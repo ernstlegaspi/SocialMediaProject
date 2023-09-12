@@ -10,13 +10,14 @@ import Feed from '@/components/Feed'
 import Input from '@/components/Input'
 import InteractButton from '@/components/InteractButton'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AiOutlineHeart, AiOutlineFileGif } from 'react-icons/ai'
 import { BiArrowBack } from 'react-icons/bi'
 import { BsBookmark, BsImage } from 'react-icons/bs'
 import { IoChatboxOutline, IoLocationOutline } from 'react-icons/io5'
 import { PiSmileyBold } from 'react-icons/pi'
 import { useRouter } from 'next/navigation'
+import { toast } from 'react-hot-toast'
 
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { Comment } from '@prisma/client'
@@ -31,15 +32,20 @@ interface FeedProps {
 	commentCount?: number
 	dateTime: Date
 	comments: Comment[]
+	isLikedByUser?: boolean
+	likedFeedId?: string
 }
 
-const PageFeed = ({ id, userName, userTag, body, userImage, commentCount, likeCount, dateTime, comments }: FeedProps) => {
+const PageFeed = ({ id, likedFeedId, isLikedByUser, userName, userTag, body, userImage, commentCount, likeCount, dateTime, comments }: FeedProps) => {
 	const [isCommentHovered, setIsCommentHovered] = useState(false)
 	const [isHeartHovered, setIsHeartHovered] = useState(false)
 	const [isBookmarkHovered, setIsBookmarkHovered] = useState(false)
+	const [likeDisabled, setLikeDisabled] = useState(false)
 	const [disabled, setDisabled] = useState(false)
 	const [comment, setComment] = useState('')
+	const [isClicked, setIsClicked] = useState(false)
 	const router = useRouter()
+	const likePostAbort = new AbortController()
 
 	const { register, handleSubmit, setValue } = useForm<FieldValues>({
 		defaultValues: {
@@ -62,11 +68,58 @@ const PageFeed = ({ id, userName, userTag, body, userImage, commentCount, likeCo
 	}
 
 	const handleLikeFeed = () => {
+		if(!isLikedByUser) setIsClicked(true)
+
+		if(isClicked) alert(8)
+
+		if(isClicked) {
+			alert(123123)
+			setLikeDisabled(true)
+			setIsClicked(false)
+			
+			axios.delete(`/api/like-post/${likedFeedId}`)
+			.then(() => {
+				setLikeDisabled(false)
+				alert('Deleted')
+				router.refresh()
+			})
+			.catch(() => {
+				toast.error('Error removing like to this feed')
+				setIsClicked(false)
+				setLikeDisabled(false)
+			})
+			
+			return
+		}
+
+		setLikeDisabled(true)
+
+		// axios.post(`/api/like-post/${id}`, { signal: likePostAbort.signal })
 		axios.post(`/api/like-post/${id}`)
-		.then(() => alert(1))
-		.catch(() => alert(2))
+		.then(() => {
+			setLikeDisabled(false)
+			alert("Liked")
+			router.refresh()
+		})
+		.catch(() => {
+			toast.error('Error liking this feed')
+			setIsClicked(false)
+			setLikeDisabled(false)
+		})
 	}
 	
+	useEffect(() => {
+		if(isLikedByUser) setIsClicked(true)
+		
+		// if(isLikedByUser && !isClicked) {
+		// 	axios.delete(`/api/like-post/${likedFeedId}`)
+		// 	.catch(() => {
+		// 		toast.error('Error 22222')
+		// 		setIsClicked(false)
+		// 	})
+		// }
+	}, [])
+
 	return (
 		<>
 			<div className="p-5">
@@ -88,7 +141,7 @@ const PageFeed = ({ id, userName, userTag, body, userImage, commentCount, likeCo
 				</div>
 				<div className="mt-5 p-3 border-y border-slate-700 flex justify-between text-slate-500">
 					<InteractButton onClick={() => {}} setHover={setIsCommentHovered} isBlue isHovered={isCommentHovered} icon={IoChatboxOutline} />
-					<InteractButton onClick={handleLikeFeed} setHover={setIsHeartHovered} isHovered={isHeartHovered} icon={AiOutlineHeart} />
+					<InteractButton isClicked={isClicked} onClick={handleLikeFeed} setHover={setIsHeartHovered} isHovered={isHeartHovered} icon={AiOutlineHeart} />
 					<InteractButton onClick={() => {}} setHover={setIsBookmarkHovered} isYellow isHovered={isBookmarkHovered} icon={BsBookmark} />
 				</div>
 				<div className="w-full flex">

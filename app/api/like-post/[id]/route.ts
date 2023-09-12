@@ -33,7 +33,22 @@ export async function POST(request: Request, { params }: { params: IParams }) {
 
 export async function DELETE(request: Request, { params }: { params: IParams }) {
 	try {
+		const currentUser = await getCurrentUser()
+
+		if(!currentUser) return _401()
+
 		const { id } = params
+
+		const postToDelete = await prisma.likedFeeds.deleteMany({
+			where: {
+				id,
+				userId: currentUser.id
+			}
+		})
+
+		if(!postToDelete) return _400()
+
+		return _201(postToDelete)
 	}
 	catch(error: any) {
 		return _400()
