@@ -14,7 +14,7 @@ model User {
 	email String @unique
 	hashedPassword String
 	image String
-	likeCount Int?
+	likeCount Int? @default(0)
 	tag String?
 	createdAt DateTime @default(now())
 	updatedAt DateTime @updatedAt
@@ -30,8 +30,8 @@ model Comment {
 	userName String
 	userTag String
 	userImage String
-	commentCount Int?
-	likeCount Int?
+	commentCount Int? @default(0)
+	likeCount Int? @default(0)
 	createdAt DateTime @default(now())
 	updatedAt DateTime @updatedAt
 
@@ -56,8 +56,8 @@ model Post {
 	userTag String
 	userImage String
 	body String
-	commentCount Int?
-	likeCount Int?
+	commentCount Int? @default(0)
+	likeCount Int? @default(0)
 	createdAt DateTime @default(now())
 	updatedAt DateTime @updatedAt
 

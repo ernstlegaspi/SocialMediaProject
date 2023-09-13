@@ -37,7 +37,19 @@ export async function POST(request: Request, { params }: { params: IParams }) {
 		})
 
 		if(!newComment) return _500()
-		return _201(newComment)
+
+		const updatedCommentCount = await prisma.post.update({
+			where: {
+				id
+			},
+			data: {
+				commentCount: {
+					increment: 1
+				}
+			}
+		})
+		
+		return _201(updatedCommentCount)
 	}
 	catch(error: any) {
 		return _400()

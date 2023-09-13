@@ -23,7 +23,7 @@ interface FeedProps {
 	name: string | undefined | null
 	tag: string | null
 	dateTime?: Date
-	id: string
+	id: string | null | undefined
 }
 
 const Feed = ({ avatar, body, commentCount, image, likeCount, name, tag, dateTime, id }: FeedProps) => {
@@ -52,8 +52,8 @@ const Feed = ({ avatar, body, commentCount, image, likeCount, name, tag, dateTim
 						</div>
 					)}
 					<div className="flex mt-3 text-white">
-						<InteractButton setHover={setIsCommentHovered} isBlue count={commentCount?.toString()! || "0"} isHovered={isCommentHovered} icon={IoChatboxOutline} />
-						<InteractButton setHover={setIsHeartHovered} count={likeCount?.toString()! || "0"} isHovered={isHeartHovered} icon={AiOutlineHeart} />
+						<InteractButton onClick={() => {}} setHover={setIsCommentHovered} isBlue count={commentCount?.toString()! || "0"} isHovered={isCommentHovered} icon={IoChatboxOutline} />
+						<InteractButton onClick={() => {}} setHover={setIsHeartHovered} count={likeCount?.toString()! || "0"} isHovered={isHeartHovered} icon={AiOutlineHeart} />
 					</div>
 				</div>
 			</div>

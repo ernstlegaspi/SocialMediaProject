@@ -17,7 +17,7 @@ const Page = async ({ params }: { params: IParams }) => {
 
 	return (
 		<>
-			<Feed id={feed.id} likedFeedId={likedFeed?.id} isLikedByUser={likedFeed?.userId === user.id} userName={feed.userName} userTag={feed.userTag} body={feed.body} dateTime={feed.createdAt} comments={feed.comments.reverse()} />
+			<Feed post={feed} likedFeedId={likedFeed?.id} isLikedByUser={likedFeed?.userId === user.id} comments={feed.comments.reverse()} />
 		</>	
 	)
 }
